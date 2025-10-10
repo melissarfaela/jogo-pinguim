@@ -33,6 +33,8 @@ ASSET_DIRS = [
     Path("jogo-pinguim_extracted/jogo-pinguim/assets"),
     Path("/mnt/data/jogo-pinguim/assets"),
     Path("/mnt/data/jogo-pinguim_extracted/jogo-pinguim/assets"),
+    Path(__file__).parent / "assets",          # dentro de Jogo-codigo/assets
+    Path(__file__).parent.parent / "assets",  
 ]
 
 def find_asset(subpath_candidates):
@@ -118,7 +120,7 @@ p_idle = pygame.transform.scale(p_idle, PLAYER_SCALED)
 p_walk = pygame.transform.scale(p_walk, PLAYER_SCALED)
 p_jump = pygame.transform.scale(p_jump, PLAYER_SCALED)
 p_die = pygame.transform.scale(p_die, PLAYER_SCALED)
-fish_img = pygame.transform.scale(fish_img, (28, 20))
+fish_img = pygame.transform.scale(fish_img, (50, 50))
 if ult_img:
     ult_img = pygame.transform.scale(ult_img, (80, 80))
 
@@ -213,7 +215,8 @@ class FishProjectile(pygame.sprite.Sprite):
     def __init__(self, x, y, dir_right, owner):
         super().__init__()
         self.image = fish_img.copy()
-        if not dir_right:
+
+        if dir_right:
             self.image = pygame.transform.flip(self.image, True, False)
         self.rect = self.image.get_rect(center=(x,y))
         self.vx = FISH_SPEED if dir_right else -FISH_SPEED
